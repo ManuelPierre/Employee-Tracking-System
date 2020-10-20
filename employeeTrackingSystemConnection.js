@@ -95,10 +95,11 @@ function runSearch() {
 function viewAll() {
   connection.query("SELECT * FROM employee", function (err, res) {
     if (err) throw err;
-    console.log(res);
+    console.table(res);
+    runSearch();
 
   });
-  runSearch();
+  
 
 }
 // viewAll();
@@ -106,9 +107,10 @@ function viewAll() {
 function viewAllDepartments() {
   connection.query("SELECT * FROM department", function (err, res) {
     if (err) throw err;
-    console.log(res);
+    console.table(res);
+    runSearch();
   });
-  runSearch();
+ 
 
 }
 // viewAll();
@@ -116,9 +118,10 @@ function viewAllDepartments() {
 function viewAllRoles() {
   connection.query("SELECT * FROM role", function (err, res) {
     if (err) throw err;
-    console.log(res);
+    console.table(res);
+    runSearch();
   });
-  runSearch();
+  
 
 }
 // viewAll();
@@ -129,10 +132,11 @@ function viewAllEmployeesByDepartment() {
     function (err, res) {
       if (err) throw err;
       console.table(res);
+      runSearch();
     }
 
   );
-  runSearch();
+  
 }
 
 // viewAllEmployeesByDepartment();
@@ -143,9 +147,10 @@ function viewAllByManager() {
     function (err, res) {
       if (err) throw err;
       console.table(res);
+      runSearch();
     }
   );
-  runSearch();
+ 
 }
 
 // viewAllByManager();
@@ -196,10 +201,10 @@ function AddEmployee() {
           function (err, res) {
             if (err) throw err;
             console.table(res);
+            runSearch();
           }
         );
       });
-    runSearch();
   });
 }
 
@@ -235,11 +240,12 @@ function RemoveEmployee() {
           function (err, res) {
             if (err) throw err;
             console.table(res);
+            runSearch();
           }
         );
       });
   });
-  runSearch();
+  
 }
 
 function UpdateRole() {
@@ -280,22 +286,26 @@ function UpdateRole() {
           },
         ])
         .then(function (answer) {
+          console.log(answer);
           connection.query("UPDATE `employee` SET ? WHERE ?", [{
               role_id: answer.role,
             },
             {
               id: answer.employee,
-            },
+            }],
 
             function (err, res) {
-              if (err) throw err;
-              //console.table(res);
+
+              if (err) console.log(err);
+              console.table(res);
+              runSearch();
+              
             },
-          ]);
+          );
         });
     });
   });
-  runSearch();
+ 
 }
 
 
@@ -339,7 +349,7 @@ function addRole() {
           },
           function (err, res) {
             if (err) throw err;
-            // console.table(res);
+            console.table(res);
             runSearch();
           }
         );
@@ -364,7 +374,7 @@ function addDepartment() {
         },
         function (err, res) {
           if (err) throw err;
-          // console.table(res);
+          console.table(res);
           runSearch();
         }
       );
